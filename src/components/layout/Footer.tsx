@@ -49,7 +49,7 @@ export default function Footer({ setActiveTab }: FooterProps) {
               "The most efficient DOM structure is the one that was never parsed. Simplify the environment, and the intelligence will follow."
             </p>
             <span className="block text-[9px] font-mono uppercase tracking-wider text-[#6C63FF] mt-1.5">
-              — Browser Optimizer MCP Team
+              — The Team
             </span>
           </div>
         </motion.div>
