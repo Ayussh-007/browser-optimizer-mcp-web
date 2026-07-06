@@ -121,3 +121,9 @@ input[type=range]::-moz-range-track {
   100% { background-position: 60px 60px; }
 }
 
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
