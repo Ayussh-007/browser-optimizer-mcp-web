@@ -418,10 +418,10 @@ export default function ProductTab() {
       {/* ─── SECTION 5: Processing pipeline (additional content) ─── */}
       <section className="max-w-4xl mx-auto px-6 w-full py-12">
         <Reveal>
-          <h2 className="font-geist text-xl md:text-2xl font-bold tracking-tight mb-2 text-center">
+          <h2 className="font-geist text-2.5xl md:text-3.5xl font-bold tracking-tight mb-2 text-center text-white">
             Processing Pipeline
           </h2>
-          <p className="text-xs text-[var(--color-text-secondary)] text-center mb-10 max-w-lg mx-auto">
+          <p className="text-sm text-[var(--color-text-secondary)] text-center mb-10 max-w-lg mx-auto leading-relaxed">
             Five specialized stages transform raw browser DOM into minimal, structured payloads for your agent.
           </p>
         </Reveal>
@@ -473,10 +473,10 @@ export default function ProductTab() {
       {/* ─── SECTION 6: Integration logos / ecosystem ─── */}
       <section className="max-w-4xl mx-auto px-6 w-full py-12 text-center">
         <Reveal>
-          <p className="text-[9px] font-mono font-semibold tracking-[0.2em] text-[#5A5A6B] uppercase mb-2">
+          <p className="text-[10px] font-mono font-semibold tracking-[0.2em] text-[#5A5A6B] uppercase mb-2">
             Works with your stack
           </p>
-          <h2 className="font-geist text-xl md:text-2xl font-bold tracking-tight mb-8">
+          <h2 className="font-geist text-2.5xl md:text-3.5xl font-bold tracking-tight mb-8 text-white">
             First-class integrations
           </h2>
         </Reveal>
