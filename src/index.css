@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-geist: "Geist", "Geist Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-bg-primary: #0A0A0B;
+  
+  --color-surface-main: #0A0A0B;
+  --color-surface-elevated: #111113;
+  --color-surface-level2: #1A1A1E;
+  
+  --color-text-primary: #F7F8F8;
+  --color-text-secondary: #8A8F98;
+  
+  --color-border-subtle: #242427;
+  
+  --color-accent-purple: #5E6AD2;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
