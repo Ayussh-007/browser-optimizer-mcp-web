@@ -223,9 +223,9 @@ export default function ProductTab() {
     <div className="w-full flex-1 flex flex-col overflow-x-hidden">
 
       {/* ─── SECTION 1: Hero heading ─── */}
-      <section className="max-w-4xl mx-auto px-6 pt-12 pb-4 text-center">
+      <section className="max-w-4xl mx-auto px-6 pt-16 pb-6 text-center">
         <Reveal>
-          <h1 className="font-geist text-3.5xl md:text-4.5xl font-bold tracking-tight leading-[1.15] mb-3">
+          <h1 className="font-geist text-4xl md:text-5.5xl lg:text-6xl font-bold tracking-tight leading-[1.15] mb-5 text-white">
             Built for{' '}
             <span className="bg-gradient-to-r from-[#7C8AFF] via-[#A78BFA] to-[#C084FC] bg-clip-text text-transparent">
               multi-agent workflows
@@ -233,7 +233,7 @@ export default function ProductTab() {
           </h1>
         </Reveal>
         <Reveal delay={0.08}>
-          <p className="text-[var(--color-text-secondary)] text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-[var(--color-text-secondary)] text-base md:text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed">
             Browser Optimizer acts as a transparent proxy between your browser driver and the model, handling complex DOM lifecycle management.
           </p>
         </Reveal>
@@ -317,7 +317,7 @@ export default function ProductTab() {
       {/* ─── SECTION 3: Operational Benchmarks table ─── */}
       <section className="max-w-4xl mx-auto px-6 w-full pb-10">
         <Reveal>
-          <h2 className="font-geist text-xl md:text-2xl font-bold tracking-tight mb-4">
+          <h2 className="font-geist text-2.5xl md:text-3.5xl font-bold tracking-tight mb-4 text-white">
             Operational Benchmarks
           </h2>
         </Reveal>
@@ -366,10 +366,10 @@ export default function ProductTab() {
       {/* ─── SECTION 4: Metrics cards (additional content) ─── */}
       <section className="max-w-4xl mx-auto px-6 w-full py-12">
         <Reveal>
-          <h2 className="font-geist text-xl md:text-2xl font-bold tracking-tight mb-2 text-center">
+          <h2 className="font-geist text-2.5xl md:text-3.5xl font-bold tracking-tight mb-2 text-center text-white">
             Performance at a Glance
           </h2>
-          <p className="text-xs text-[var(--color-text-secondary)] text-center mb-8 max-w-lg mx-auto">
+          <p className="text-sm text-[var(--color-text-secondary)] text-center mb-8 max-w-lg mx-auto leading-relaxed">
             Real production numbers from enterprise deployments across thousands of browser sessions.
           </p>
         </Reveal>
