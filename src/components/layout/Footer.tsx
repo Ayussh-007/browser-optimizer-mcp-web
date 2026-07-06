@@ -35,7 +35,7 @@ export default function Footer({ setActiveTab }: FooterProps) {
             <div className="flex items-center gap-2.5 mb-4">
               <img src="/logo.png" alt="Logo" className="w-6 h-6 object-contain" />
               <span className="font-semibold text-xs tracking-widest text-white font-geist uppercase">
-                Browser <span className="text-[#6C63FF]">Optimizer</span>
+                Browser <span className="text-[#6C63FF]">Optimizer MCP</span>
               </span>
             </div>
             <p className="text-[13px] text-[var(--color-text-secondary)] leading-relaxed max-w-sm mb-6">
@@ -49,7 +49,7 @@ export default function Footer({ setActiveTab }: FooterProps) {
               "The most efficient DOM structure is the one that was never parsed. Simplify the environment, and the intelligence will follow."
             </p>
             <span className="block text-[9px] font-mono uppercase tracking-wider text-[#6C63FF] mt-1.5">
-              — Browser Optimizer Team
+              — Browser Optimizer MCP Team
             </span>
           </div>
         </motion.div>
