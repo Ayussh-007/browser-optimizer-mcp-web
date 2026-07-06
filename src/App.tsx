@@ -17,7 +17,7 @@ function App() {
       case 'home': return <HomeTab setActiveTab={setActiveTab} />;
       case 'product': return <ProductTab />;
       case 'resources': return <ResourcesTab />;
-      case 'pricing': return <PricingTab />;
+      case 'pricing': return <PricingTab setActiveTab={setActiveTab} />;
       default: return <HomeTab />;
     }
   };
