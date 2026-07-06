@@ -27,7 +27,7 @@ function App() {
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
       
       {/* Main Content Area with Tab Transitions */}
-      <main className="flex-1 pt-24 pb-12 flex flex-col relative overflow-hidden">
+      <main className={`flex-1 pt-16 flex flex-col relative ${activeTab === 'resources' ? '' : 'overflow-hidden pb-12 pt-24'}`}>
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -42,7 +42,7 @@ function App() {
         </AnimatePresence>
       </main>
 
-      <Footer />
+      {activeTab !== 'resources' && <Footer />}
     </div>
   );
 }

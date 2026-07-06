@@ -17,6 +17,11 @@
   --color-border-subtle: #242427;
   
   --color-accent-purple: #5E6AD2;
+  
+  --color-code-bg: #16161A;
+  --color-code-header: #1E1E24;
+  --color-accent-purple-muted: rgba(94,106,210,0.12);
+  --color-text-body: #A1A1AA;
 }
 
 body {
