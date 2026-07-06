@@ -23,11 +23,11 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] font-sans selection:bg-[var(--color-accent-blue)] selection:text-white flex flex-col">
+    <div className={`${activeTab === 'resources' ? 'h-screen overflow-hidden' : 'min-h-screen'} bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] font-sans selection:bg-[var(--color-accent-blue)] selection:text-white flex flex-col`}>
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
       
       {/* Main Content Area with Tab Transitions */}
-      <main className={`flex-1 pt-16 flex flex-col relative ${activeTab === 'resources' ? '' : 'overflow-hidden pb-12 pt-24'}`}>
+      <main className={`flex flex-col relative ${activeTab === 'resources' ? 'flex-1 pt-16 overflow-hidden' : 'flex-1 overflow-hidden pb-12 pt-24'}`}>
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -35,7 +35,7 @@ function App() {
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: -10, filter: 'blur(4px)' }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="w-full flex-1 flex flex-col"
+            className="w-full flex-1 min-h-0 flex flex-col"
           >
             {renderActiveTab()}
           </motion.div>

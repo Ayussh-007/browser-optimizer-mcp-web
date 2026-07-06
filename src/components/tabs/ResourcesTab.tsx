@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
   Rocket, Plug, FileCode2, LayoutDashboard, GitFork, BarChart3,
   Lightbulb, FlaskConical, Copy, Check, ChevronLeft, ChevronRight,
@@ -630,49 +631,63 @@ export default function ResourcesTab() {
   const [activeSection, setActiveSection] = useState<SectionId>('getting-started');
   const [activeAnchor, setActiveAnchor] = useState<string>('');
   const contentRef = useRef<HTMLDivElement>(null);
+  // Track pending scroll-to-top after section change
+  const pendingScrollTop = useRef(false);
 
   const currentIndex = SECTION_ORDER.indexOf(activeSection);
   const prevSection = currentIndex > 0 ? SECTION_ORDER[currentIndex - 1] : null;
   const nextSection = currentIndex < SECTION_ORDER.length - 1 ? SECTION_ORDER[currentIndex + 1] : null;
 
   const handleSectionChange = useCallback((id: SectionId) => {
+    // Mark that after new content mounts, we want to scroll to top
+    pendingScrollTop.current = true;
     setActiveSection(id);
     setActiveAnchor('');
-    contentRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
+  // After section content mounts (activeSection changes), scroll to top smoothly
+  useEffect(() => {
+    if (pendingScrollTop.current && contentRef.current) {
+      pendingScrollTop.current = false;
+      contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [activeSection]);
 
   const handleAnchorClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, anchorId: string) => {
     e.preventDefault();
     const element = document.getElementById(anchorId);
-    if (element && contentRef.current) {
-      const container = contentRef.current;
-      const elementRect = element.getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
-      const targetScrollTop = container.scrollTop + elementRect.top - containerRect.top - 24; // 24px padding offset
-      
-      container.scrollTo({
-        top: targetScrollTop,
-        behavior: 'smooth'
-      });
-      setActiveAnchor(anchorId);
-      window.history.pushState(null, '', `#${anchorId}`);
-    }
+    const container = contentRef.current;
+    if (!element || !container) return;
+
+    // getBoundingClientRect difference is reliable regardless of nesting depth
+    const elRect = element.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    // Current scroll position + visual distance from container top, minus 32px breathing room
+    const targetScrollTop = container.scrollTop + (elRect.top - containerRect.top) - 32;
+
+    container.scrollTo({ top: Math.max(0, targetScrollTop), behavior: 'smooth' });
+    setActiveAnchor(anchorId);
+    window.history.pushState(null, '', `#${anchorId}`);
   }, []);
 
-  // Scroll spy for right sidebar
+  // Scroll spy for right sidebar — uses the scrollable container as root
   useEffect(() => {
     const anchors = SECTION_ANCHORS[activeSection];
-    if (!anchors?.length) return;
+    if (!anchors?.length || !contentRef.current) return;
 
+    const container = contentRef.current;
     const observer = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveAnchor(entry.target.id);
-          }
+        // Pick the topmost intersecting element
+        const intersecting = entries.filter((e) => e.isIntersecting);
+        if (intersecting.length > 0) {
+          const top = intersecting.sort(
+            (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
+          )[0];
+          setActiveAnchor(top.target.id);
         }
       },
-      { rootMargin: '-80px 0px -70% 0px', threshold: 0.1 }
+      { root: container, rootMargin: '-10% 0px -70% 0px', threshold: 0 }
     );
 
     const timer = setTimeout(() => {
@@ -680,7 +695,7 @@ export default function ResourcesTab() {
         const el = document.getElementById(a.id);
         if (el) observer.observe(el);
       });
-    }, 100);
+    }, 150);
 
     return () => {
       clearTimeout(timer);
@@ -703,9 +718,9 @@ export default function ResourcesTab() {
   const anchors = SECTION_ANCHORS[activeSection] || [];
 
   return (
-    <div className="w-full flex-1 flex" style={{ minHeight: 'calc(100vh - 10rem)' }}>
+    <div className="w-full flex-1 flex overflow-hidden">
       {/* ── LEFT SIDEBAR ── */}
-      <aside className="hidden lg:flex flex-col w-[260px] flex-shrink-0 border-r border-[var(--color-border-subtle)] px-5 py-6 overflow-y-auto hide-scrollbar">
+      <aside className="hidden lg:flex flex-col w-[260px] flex-shrink-0 min-h-0 border-r border-[var(--color-border-subtle)] px-5 py-6 overflow-y-auto hide-scrollbar">
         {/* Documentation title */}
         <div className="mb-6">
           <h2 className="font-geist text-lg font-bold text-[var(--color-text-primary)] tracking-tight">Documentation</h2>
@@ -746,7 +761,7 @@ export default function ResourcesTab() {
       </aside>
 
       {/* ── MAIN CONTENT ── */}
-      <main ref={contentRef} className="flex-1 overflow-y-auto px-8 md:px-12 py-8 max-w-4xl">
+      <main ref={contentRef} className="flex-1 min-h-0 overflow-y-auto px-8 md:px-12 py-8 max-w-4xl">
         {/* Breadcrumbs */}
         <nav className="flex items-center gap-2 text-[13px] mb-6">
           <span className="text-[var(--color-text-secondary)]">Documentation</span>
@@ -759,10 +774,19 @@ export default function ResourcesTab() {
           {SECTION_TITLES[activeSection]}
         </h1>
 
-        {/* Section content */}
-        <div className="docs-content">
-          <ContentComponent />
-        </div>
+        {/* Section content — animated on section switch */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeSection}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+            className="docs-content"
+          >
+            <ContentComponent />
+          </motion.div>
+        </AnimatePresence>
 
         {/* ── Prev / Next Navigation ── */}
         <div className="flex items-center justify-between mt-16 pt-8 border-t border-[var(--color-border-subtle)]">
@@ -794,7 +818,7 @@ export default function ResourcesTab() {
       </main>
 
       {/* ── RIGHT SIDEBAR — On this page ── */}
-      <aside className="hidden xl:flex flex-col w-[200px] flex-shrink-0 py-8 pr-6 pl-4 overflow-y-auto hide-scrollbar">
+      <aside className="hidden xl:flex flex-col w-[200px] flex-shrink-0 min-h-0 py-8 pr-6 pl-4 overflow-y-auto hide-scrollbar">
         {anchors.length > 0 && (
           <div className="sticky top-8">
             <h4 className="flex items-center gap-1.5 text-[13px] font-semibold text-[var(--color-text-primary)] mb-3 tracking-wide">
