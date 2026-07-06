@@ -42,7 +42,7 @@ function App() {
         </AnimatePresence>
       </main>
 
-      {activeTab !== 'resources' && <Footer />}
+      {activeTab !== 'resources' && <Footer setActiveTab={setActiveTab} />}
     </div>
   );
 }

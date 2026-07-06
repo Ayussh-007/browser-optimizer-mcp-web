@@ -78,7 +78,7 @@ function TypewriterCursor() {
 
 export default function HomeTab({ setActiveTab }: { setActiveTab?: (tab: 'home' | 'product' | 'resources' | 'pricing') => void }) {
   const [copied, setCopied] = useState(false);
-  const { displayed: typedText, done: typingDone } = useTypewriter('agentic efficiency', 75, 800);
+  const { displayed: typedText, done: typingDone } = useTypewriter('browser agents.', 75, 800);
 
   const handleCopy = useCallback(() => {
     navigator.clipboard.writeText('pip install browser-optimizer-mcp');
@@ -141,7 +141,7 @@ export default function HomeTab({ setActiveTab }: { setActiveTab?: (tab: 'home' 
             transition={{ duration: 0.6, delay: 0.2 }}
             className="font-geist text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-6 leading-[1.1] text-white"
           >
-            Engineered for{' '}
+            The performance layer for{' '}
             <span className="text-[var(--color-accent-purple)] block sm:inline">
               {typedText}
               <TypewriterCursor />
@@ -211,7 +211,7 @@ export default function HomeTab({ setActiveTab }: { setActiveTab?: (tab: 'home' 
         </div>
 
         {/* Hero Visual — Animated Code Panel */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -235,7 +235,7 @@ export default function HomeTab({ setActiveTab }: { setActiveTab?: (tab: 'home' 
           >
             {/* Hover Glow Border */}
             <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-500" style={{ boxShadow: 'inset 0 0 0 1px rgba(108,99,255,0.4)' }} />
-            
+
             <div className="w-10 h-10 rounded-lg bg-[var(--color-surface-main)] border border-[var(--color-border-subtle)] flex items-center justify-center mb-6 relative group-hover:border-[#6C63FF]/30 transition-colors duration-300">
               <div className="absolute inset-0 bg-[#6C63FF] opacity-0 group-hover:opacity-10 blur-md transition-opacity duration-300" />
               {feature.icon}
@@ -252,7 +252,7 @@ export default function HomeTab({ setActiveTab }: { setActiveTab?: (tab: 'home' 
       <RoiCalculator />
 
       {/* ─── Divider Badges Strip ─── */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-50px' }}
@@ -261,7 +261,7 @@ export default function HomeTab({ setActiveTab }: { setActiveTab?: (tab: 'home' 
       >
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 py-6 border-t border-b border-[var(--color-border-subtle)] bg-[#0C0C0E]/50 backdrop-blur-sm rounded-2xl">
           {BADGES.map((badge, idx) => (
-            <motion.div 
+            <motion.div
               key={idx}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
