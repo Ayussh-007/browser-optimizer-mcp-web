@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   Rocket, Plug, FileCode2, LayoutDashboard, GitFork, BarChart3,
@@ -612,7 +612,7 @@ function TestingSection() {
 }
 
 /* ─── Section Renderer ─── */
-const SECTION_COMPONENTS: Record<SectionId, () => JSX.Element> = {
+const SECTION_COMPONENTS: Record<SectionId, () => React.ReactNode> = {
   'getting-started': GettingStartedSection,
   'client-integrations': ClientIntegrationsSection,
   'reference': ReferenceSection,
@@ -724,7 +724,7 @@ export default function ResourcesTab() {
         {/* Documentation title */}
         <div className="mb-6">
           <h2 className="font-geist text-lg font-bold text-[var(--color-text-primary)] tracking-tight">Documentation</h2>
-          <span className="text-[11px] font-mono text-[var(--color-text-secondary)] tracking-wide">v2.4.0-stable</span>
+          <span className="text-[11px] font-mono text-[var(--color-text-secondary)] tracking-wide">v0.1.2-stable</span>
         </div>
 
         {/* Navigation */}
@@ -743,11 +743,10 @@ export default function ResourcesTab() {
                   <li key={item.id}>
                     <button
                       onClick={() => handleSectionChange(item.id)}
-                      className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-[14px] font-medium transition-all duration-150 text-left ${
-                        isActive
-                          ? 'bg-[var(--color-accent-purple-muted)] text-[var(--color-accent-purple)] border-l-2 border-[var(--color-accent-purple)]'
-                          : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-level2)]'
-                      }`}
+                      className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-[14px] font-medium transition-all duration-150 text-left ${isActive
+                        ? 'bg-[var(--color-accent-purple-muted)] text-[var(--color-accent-purple)] border-l-2 border-[var(--color-accent-purple)]'
+                        : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-level2)]'
+                        }`}
                     >
                       <span className={isActive ? 'text-[var(--color-accent-purple)]' : 'opacity-60'}>{item.icon}</span>
                       {item.label}
@@ -833,11 +832,10 @@ export default function ResourcesTab() {
                     <a
                       href={`#${a.id}`}
                       onClick={(e) => handleAnchorClick(e, a.id)}
-                      className={`block pl-3 py-1.5 text-[13px] transition-colors border-l-2 -ml-px ${
-                        isActive
-                          ? 'border-[var(--color-accent-purple)] text-[var(--color-accent-purple)] font-medium'
-                          : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-text-secondary)]'
-                      }`}
+                      className={`block pl-3 py-1.5 text-[13px] transition-colors border-l-2 -ml-px ${isActive
+                        ? 'border-[var(--color-accent-purple)] text-[var(--color-accent-purple)] font-medium'
+                        : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-text-secondary)]'
+                        }`}
                     >
                       {a.label}
                     </a>
