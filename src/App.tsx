@@ -14,7 +14,7 @@ function App() {
 
   const renderActiveTab = () => {
     switch (activeTab) {
-      case 'home': return <HomeTab />;
+      case 'home': return <HomeTab setActiveTab={setActiveTab} />;
       case 'product': return <ProductTab />;
       case 'resources': return <ResourcesTab />;
       case 'pricing': return <PricingTab />;
@@ -23,11 +23,11 @@ function App() {
   };
 
   return (
-    <div className={`${activeTab === 'resources' ? 'h-screen overflow-hidden' : 'min-h-screen'} bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] font-sans selection:bg-[var(--color-accent-blue)] selection:text-white flex flex-col`}>
+    <div className={`${activeTab === 'resources' ? 'lg:h-screen lg:overflow-hidden min-h-screen' : 'min-h-screen'} bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] font-sans selection:bg-[var(--color-accent-blue)] selection:text-white flex flex-col`}>
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
       
       {/* Main Content Area with Tab Transitions */}
-      <main className={`flex flex-col relative ${activeTab === 'resources' ? 'flex-1 pt-16 overflow-hidden' : 'flex-1 overflow-hidden pb-12 pt-24'}`}>
+      <main className={`flex flex-col relative ${activeTab === 'resources' ? 'flex-1 pt-16 lg:overflow-hidden' : 'flex-1 overflow-hidden pb-12 pt-24'}`}>
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}

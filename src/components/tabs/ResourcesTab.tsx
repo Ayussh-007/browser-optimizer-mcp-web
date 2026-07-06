@@ -456,6 +456,216 @@ function ArchitectureSection() {
   );
 }
 
+/* ─── Visual Sequence Diagram Data & Component ─── */
+interface Actor {
+  id: string;
+  name: string;
+  sub: string;
+  isAgent?: boolean;
+}
+
+const ACTORS: Actor[] = [
+  { id: 'agent', name: 'AI Agent', sub: '(LLM)', isAgent: true },
+  { id: 'server', name: 'MCP Server', sub: '(main.py)' },
+  { id: 'cache', name: 'Semantic Cache', sub: '(cache.py)' },
+  { id: 'browser', name: 'Browser Manager', sub: '(manager.py)' },
+  { id: 'extractor', name: 'Page Extractor', sub: '(extractor.py)' },
+  { id: 'compressor', name: 'Context Compressor', sub: '(compressor.py)' },
+  { id: 'diff', name: 'Difference Engine', sub: '(diff.py)' },
+];
+
+interface Message {
+  num: number;
+  from: number;
+  to: number;
+  label: string;
+  dashed?: boolean;
+}
+
+const MESSAGES: Message[] = [
+  { num: 1, from: 0, to: 1, label: 'extract_context(url)' },
+  { num: 2, from: 1, to: 3, label: 'navigate(url)' },
+  { num: 3, from: 3, to: 1, label: 'page loaded', dashed: true },
+  { num: 4, from: 1, to: 2, label: 'lookup(url, current_html)' },
+  { num: 5, from: 2, to: 0, label: 'Return cached context', dashed: true },
+  { num: 6, from: 1, to: 4, label: 'extract(page)' },
+  { num: 7, from: 4, to: 1, label: 'raw html, title, url, ARIA tree', dashed: true },
+  { num: 8, from: 1, to: 5, label: 'compress(extracted_data)' },
+  { num: 9, from: 5, to: 1, label: 'cleaned UI elements list, text summary', dashed: true },
+  { num: 10, from: 1, to: 2, label: 'store(url, html, compressed_context)' },
+  { num: 11, from: 1, to: 6, label: 'compute_diff(url, current_ui)' },
+  { num: 12, from: 6, to: 1, label: 'added & removed UI elements', dashed: true },
+  { num: 13, from: 1, to: 0, label: 'Return optimized JSON context', dashed: true },
+];
+
+function VisualSequenceDiagram() {
+  return (
+    <div className="w-full overflow-x-auto my-6 rounded-lg border border-[var(--color-border-subtle)] bg-[#070708] p-5 hide-scrollbar">
+      <div className="min-w-[960px] relative select-none" style={{ height: '620px' }}>
+        
+        {/* Vertical Lifelines */}
+        <div className="absolute inset-0 flex justify-between pointer-events-none">
+          {ACTORS.map((actor, idx) => (
+            <div 
+              key={idx} 
+              className="h-full flex flex-col items-center" 
+              style={{ width: '14.2857%' }}
+            >
+              {/* Vertical line running down */}
+              <div className="w-0.5 flex-1 border-l border-dashed border-[#242427] mt-14 mb-14" />
+            </div>
+          ))}
+        </div>
+
+        {/* Top Actor Cards */}
+        <div className="absolute top-0 left-0 w-full flex justify-between">
+          {ACTORS.map((actor, idx) => (
+            <div 
+              key={idx} 
+              className="flex flex-col items-center justify-center text-center px-1"
+              style={{ width: '14.2857%' }}
+            >
+              {actor.isAgent ? (
+                <div className="flex flex-col items-center">
+                  <svg className="w-7 h-7 text-[var(--color-accent-purple)] mb-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <circle cx="12" cy="6" r="3.5" />
+                    <path d="M12 9.5v8.5M7 13h10M9 22l3-4 3 4" />
+                  </svg>
+                  <span className="text-[10px] font-bold tracking-tight text-[var(--color-text-primary)]">{actor.name}</span>
+                  <span className="text-[9px] font-mono text-[var(--color-text-secondary)]">{actor.sub}</span>
+                </div>
+              ) : (
+                <div className="bg-[var(--color-surface-elevated)] border border-[var(--color-border-subtle)] rounded px-2 py-1 w-full max-w-[120px] min-h-[46px] flex flex-col justify-center items-center">
+                  <span className="text-[10px] font-bold text-[var(--color-text-primary)] leading-tight">{actor.name}</span>
+                  <span className="text-[9px] font-mono text-[var(--color-text-secondary)] mt-0.5">{actor.sub}</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom Actor Cards */}
+        <div className="absolute bottom-0 left-0 w-full flex justify-between">
+          {ACTORS.map((actor, idx) => (
+            <div 
+              key={idx} 
+              className="flex flex-col items-center justify-center text-center px-1"
+              style={{ width: '14.2857%' }}
+            >
+              {actor.isAgent ? (
+                <div className="flex flex-col items-center">
+                  <svg className="w-7 h-7 text-[var(--color-accent-purple)] mb-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <circle cx="12" cy="6" r="3.5" />
+                    <path d="M12 9.5v8.5M7 13h10M9 22l3-4 3 4" />
+                  </svg>
+                  <span className="text-[10px] font-bold tracking-tight text-[var(--color-text-primary)]">{actor.name}</span>
+                  <span className="text-[9px] font-mono text-[var(--color-text-secondary)]">{actor.sub}</span>
+                </div>
+              ) : (
+                <div className="bg-[var(--color-surface-elevated)] border border-[var(--color-border-subtle)] rounded px-2 py-1 w-full max-w-[120px] min-h-[46px] flex flex-col justify-center items-center">
+                  <span className="text-[10px] font-bold text-[var(--color-text-primary)] leading-tight">{actor.name}</span>
+                  <span className="text-[9px] font-mono text-[var(--color-text-secondary)] mt-0.5">{actor.sub}</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* alt cache box border outline */}
+        <div 
+          className="absolute border border-dashed border-[rgba(255,255,255,0.18)] bg-[rgba(255,255,255,0.015)] rounded pointer-events-none"
+          style={{
+            left: '10.5%',
+            width: '79%',
+            top: '202px',
+            height: '236px'
+          }}
+        >
+          {/* alt label container */}
+          <div className="absolute top-0 left-0 bg-[var(--color-surface-level2)] border-r border-b border-[rgba(255,255,255,0.18)] px-2 py-0.5 text-[9px] font-bold text-[var(--color-accent-purple)] rounded-tl rounded-br">
+            alt
+          </div>
+          {/* text label 1 */}
+          <div className="absolute top-0.5 left-10 text-[9px] font-mono text-[var(--color-text-secondary)] font-semibold tracking-wider">
+            [Cache Hit (HTML Unchanged)]
+          </div>
+
+          {/* dotted partition line */}
+          <div 
+            className="absolute left-0 right-0 border-t border-dashed border-[rgba(255,255,255,0.18)]"
+            style={{ top: '38px' }}
+          />
+
+          {/* text label 2 */}
+          <div 
+            className="absolute left-3 text-[9px] font-mono text-[var(--color-text-secondary)] font-semibold tracking-wider"
+            style={{ top: '43px' }}
+          >
+            [Cache Miss (HTML Changed / New URL)]
+          </div>
+        </div>
+
+        {/* Message Flows */}
+        <div className="absolute top-[56px] left-0 w-full flex flex-col gap-0">
+          {MESSAGES.map((msg) => {
+            const srcCenter = (msg.from + 0.5) * 14.2857;
+            const destCenter = (msg.to + 0.5) * 14.2857;
+            const left = Math.min(srcCenter, destCenter);
+            const width = Math.abs(destCenter - srcCenter);
+            const isRight = msg.to > msg.from;
+
+            return (
+              <div key={msg.num} className="relative h-[38px] w-full flex items-center">
+                {/* Sequence Circle Badge */}
+                <div 
+                  className="absolute w-[18px] h-[18px] rounded-full bg-white text-black flex items-center justify-center text-[9px] font-bold z-10 shadow"
+                  style={{ left: `calc(${srcCenter}% - 9px)` }}
+                >
+                  {msg.num}
+                </div>
+
+                {/* Message Label Title */}
+                <div 
+                  className="absolute text-[10px] font-mono text-[var(--color-text-primary)] -translate-y-3 px-1 bg-[#070708]/95 select-text"
+                  style={{ 
+                    left: `calc(${left}% + 15px)`, 
+                    width: `calc(${width}% - 30px)`,
+                    textAlign: 'center'
+                  }}
+                >
+                  {msg.label}
+                </div>
+
+                {/* Arrow line structure */}
+                <div 
+                  className="absolute h-0.5"
+                  style={{ 
+                    left: `${left}%`, 
+                    width: `${width}%`,
+                    borderTop: msg.dashed ? '1.5px dashed rgba(255,255,255,0.75)' : '1.5px solid white'
+                  }}
+                />
+
+                {/* Arrowhead rendering */}
+                <div 
+                  className="absolute w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent z-10"
+                  style={{
+                    left: isRight ? `calc(${destCenter}% - 6px)` : `${destCenter}%`,
+                    borderLeft: isRight ? '7px solid white' : 'none',
+                    borderRight: !isRight ? '7px solid white' : 'none',
+                    transform: 'translateY(-3.5px)'
+                  }}
+                />
+              </div>
+            );
+          })}
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
 function ProcessFlowSection() {
   return (
     <>
@@ -481,33 +691,8 @@ function ProcessFlowSection() {
         <li><strong className="text-[var(--color-text-primary)]">Payload Delivery</strong>: Returns compact JSON with optimized UI elements, ARIA snapshot, and metadata.</li>
       </ol>
 
-      <h3 id="flow-diagram" className="font-geist text-xl font-bold mt-10 mb-4">Flow Diagram</h3>
-      <div className="rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-code-bg)] p-6 my-4">
-        <div className="flex flex-wrap items-center justify-center gap-3 text-xs font-mono">
-          {[
-            { label: 'AI Agent', color: '#5E6AD2' },
-            { label: 'MCP Server', color: '#5E6AD2' },
-            { label: 'Semantic Cache', color: '#28C840' },
-            { label: 'Browser Manager', color: '#FEBC2E' },
-            { label: 'Page Extractor', color: '#FF5F57' },
-            { label: 'Compressor', color: '#5E6AD2' },
-            { label: 'Diff Engine', color: '#28C840' },
-          ].map((node, i) => (
-            <div key={i} className="flex items-center gap-2">
-              {i > 0 && <span className="text-[var(--color-text-secondary)]">→</span>}
-              <span
-                className="px-3 py-1.5 rounded border text-[var(--color-text-primary)]"
-                style={{ borderColor: node.color, backgroundColor: `${node.color}15` }}
-              >
-                {node.label}
-              </span>
-            </div>
-          ))}
-        </div>
-        <p className="text-center text-[var(--color-text-secondary)] text-xs mt-4">
-          extract_context(url) → navigate → cache check → extract → compress → diff → return JSON
-        </p>
-      </div>
+      <h3 id="flow-diagram" className="font-geist text-xl font-bold mt-10 mb-4">Process Flow Diagram</h3>
+      <VisualSequenceDiagram />
     </>
   );
 }
@@ -718,7 +903,7 @@ export default function ResourcesTab() {
   const anchors = SECTION_ANCHORS[activeSection] || [];
 
   return (
-    <div className="w-full flex-1 flex overflow-hidden">
+    <div className="w-full flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden min-h-0">
       {/* ── LEFT SIDEBAR ── */}
       <aside className="hidden lg:flex flex-col w-[260px] flex-shrink-0 min-h-0 border-r border-[var(--color-border-subtle)] px-5 py-6 overflow-y-auto hide-scrollbar">
         {/* Documentation title */}
@@ -760,7 +945,36 @@ export default function ResourcesTab() {
       </aside>
 
       {/* ── MAIN CONTENT ── */}
-      <main ref={contentRef} className="flex-1 min-h-0 overflow-y-auto px-8 md:px-12 py-8 max-w-4xl">
+      <main ref={contentRef} className="flex-1 min-h-0 overflow-y-visible lg:overflow-y-auto px-5 md:px-12 py-8 max-w-4xl">
+        {/* Mobile / Tablet Dropdown Section Selector */}
+        <div className="lg:hidden mb-6 bg-[var(--color-surface-elevated)] border border-[var(--color-border-subtle)] rounded-lg p-4">
+          <label className="block text-[10px] font-mono text-[var(--color-text-secondary)] tracking-wider uppercase mb-2">
+            Select Section
+          </label>
+          <div className="relative">
+            <select
+              value={activeSection}
+              onChange={(e) => handleSectionChange(e.target.value as SectionId)}
+              className="w-full bg-[var(--color-surface-main)] border border-[var(--color-border-subtle)] rounded-md px-3.5 py-2.5 text-[14px] font-medium text-[var(--color-text-primary)] appearance-none focus:outline-none focus:border-[var(--color-accent-purple)] cursor-pointer"
+            >
+              {categories.map((cat) => (
+                <optgroup key={cat.name} label={cat.name} className="bg-[var(--color-surface-elevated)] text-[11px] uppercase tracking-wide">
+                  {cat.items.map((item) => (
+                    <option key={item.id} value={item.id} className="text-sm normal-case">
+                      {item.label}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-[var(--color-text-secondary)]">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
         {/* Breadcrumbs */}
         <nav className="flex items-center gap-2 text-[13px] mb-6">
           <span className="text-[var(--color-text-secondary)]">Documentation</span>

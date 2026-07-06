@@ -1,5 +1,6 @@
+import { useState, useCallback } from 'react';
 import RoiCalculator from '../ui/RoiCalculator';
-import { Filter, Database, Layers, BrainCircuit, AlertTriangle, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Filter, Database, Layers, BrainCircuit, AlertTriangle, CheckCircle2, ArrowRight, Check, Copy } from 'lucide-react';
 
 const FEATURES = [
   {
@@ -24,14 +25,22 @@ const FEATURES = [
   }
 ];
 
-export default function HomeTab() {
+export default function HomeTab({ setActiveTab }: { setActiveTab: (tab: 'home' | 'product' | 'resources' | 'pricing') => void }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = useCallback(() => {
+    navigator.clipboard.writeText('pip install browser-optimizer-mcp');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }, []);
+
   return (
     <div className="w-full flex-1 flex flex-col">
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-6 pt-20 pb-16 flex flex-col lg:flex-row items-center gap-16">
         <div className="flex-1 text-center lg:text-left">
           <div className="inline-flex items-center justify-center px-2 py-1 rounded bg-[var(--color-surface-elevated)] border border-[var(--color-border-subtle)] text-[var(--color-text-secondary)] text-[10px] font-mono font-medium tracking-wide mb-8">
-            v1.4.0 NOW STABLE
+            v0.1.2 NOW STABLE
           </div>
           <h1 className="font-geist text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 leading-tight">
             The performance layer for <span className="text-[var(--color-accent-purple)]">browser agents.</span>
@@ -39,17 +48,24 @@ export default function HomeTab() {
           <p className="text-base md:text-lg text-[var(--color-text-secondary)] mb-10 max-w-2xl mx-auto lg:mx-0">
             Eliminate up to 94% of unnecessary HTML markup, reduce latency to milliseconds, and slash LLM token costs with automated DOM pruning.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
             <div className="flex items-center justify-between bg-[var(--color-surface-main)] border border-[var(--color-border-subtle)] rounded pl-4 pr-2 py-1.5 w-full sm:w-80">
-              <span className="font-mono text-xs text-[var(--color-text-primary)]">pip install browser-mcp</span>
-              <button className="p-1 rounded bg-[var(--color-surface-elevated)] hover:bg-[var(--color-surface-level2)] transition-colors border border-[var(--color-border-subtle)]">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span className="font-mono text-xs text-[var(--color-text-primary)] select-all">pip install browser-optimizer-mcp</span>
+              <button 
+                onClick={handleCopy}
+                className="p-1.5 rounded bg-[var(--color-surface-elevated)] hover:bg-[var(--color-surface-level2)] transition-colors border border-[var(--color-border-subtle)] cursor-pointer"
+                title="Copy package command"
+              >
+                {copied ? <Check size={12} className="text-green-400" /> : <Copy size={12} className="text-[var(--color-text-secondary)]" />}
               </button>
             </div>
-            <a href="#" className="px-6 py-2 rounded bg-[var(--color-surface-elevated)] border border-[var(--color-border-subtle)] text-sm font-medium hover:bg-[var(--color-surface-level2)] transition-colors flex items-center gap-2">
+            <button 
+              onClick={() => setActiveTab('resources')}
+              className="px-6 py-2.5 rounded bg-[var(--color-surface-elevated)] border border-[var(--color-border-subtle)] text-sm font-medium hover:bg-[var(--color-surface-level2)] transition-colors flex items-center gap-2 cursor-pointer text-white"
+            >
               Read Documentation <span>→</span>
-            </a>
+            </button>
           </div>
         </div>
 
