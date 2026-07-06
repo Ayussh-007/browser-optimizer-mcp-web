@@ -505,7 +505,7 @@ function VisualSequenceDiagram() {
         
         {/* Vertical Lifelines */}
         <div className="absolute inset-0 flex justify-between pointer-events-none">
-          {ACTORS.map((actor, idx) => (
+          {ACTORS.map((_actor, idx) => (
             <div 
               key={idx} 
               className="h-full flex flex-col items-center" 
