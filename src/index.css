@@ -11,17 +11,18 @@
   --color-surface-elevated: #111113;
   --color-surface-level2: #1A1A1E;
   
-  --color-text-primary: #F7F8F8;
-  --color-text-secondary: #8A8F98;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #B8BBC6;
   
   --color-border-subtle: #242427;
   
-  --color-accent-purple: #5E6AD2;
+  --color-accent-purple: #6C63FF;
+  --color-success-green: #34D399;
   
   --color-code-bg: #16161A;
   --color-code-header: #1E1E24;
-  --color-accent-purple-muted: rgba(94,106,210,0.12);
-  --color-text-body: #A1A1AA;
+  --color-accent-purple-muted: rgba(108,99,255,0.12);
+  --color-text-body: #8A8FA0;
 }
 
 body {
@@ -56,6 +57,48 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #323235;
+}
+
+/* Range Slider Thumb Styling */
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-accent-purple);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(108,99,255,0.6);
+  border: 2px solid #FFFFFF;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: -5px; /* centers the thumb on standard tracks if track is thin */
+}
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 15px rgba(108,99,255,0.9);
+}
+input[type=range]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+}
+/* Firefox slider styles */
+input[type=range]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-accent-purple);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(108,99,255,0.6);
+  border: 2px solid #FFFFFF;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+input[type=range]::-moz-range-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 15px rgba(108,99,255,0.9);
+}
+input[type=range]::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
 }
 
 /* Firefox support */
