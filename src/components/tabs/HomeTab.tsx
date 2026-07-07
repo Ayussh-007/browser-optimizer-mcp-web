@@ -171,7 +171,7 @@ export default function HomeTab({ setActiveTab }: { setActiveTab?: (tab: 'home' 
               transition={{ duration: 0.25 }}
               className="flex items-center justify-between bg-[var(--color-surface-main)] border border-[var(--color-border-subtle)] rounded-lg pl-4 pr-1.5 py-1.5 w-full sm:w-[340px] hover:border-[#6C63FF]/40 transition-colors duration-300 group"
             >
-              <span className="font-mono text-[13px] text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)] transition-colors select-all">pip install browser-optimizer</span>
+              <span className="font-mono text-[13px] text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)] transition-colors select-all">pip install browser-optimizer-mcp</span>
               <button
                 onClick={handleCopy}
                 className="p-2 rounded-md bg-[var(--color-surface-elevated)] hover:bg-[#6C63FF] hover:text-white hover:border-[#6C63FF] transition-all duration-300 border border-[var(--color-border-subtle)] cursor-pointer text-[var(--color-text-secondary)]"
